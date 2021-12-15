@@ -6,7 +6,6 @@ public class MortgageCalculator {
     private final long loanAmount;
     private final int termInYears;
     private final float annualRate;
-    private double monthlyPayment;
 
     public MortgageCalculator(long loanAmount, int termInYears, float annualRate) {
         this.loanAmount = loanAmount;
@@ -15,7 +14,7 @@ public class MortgageCalculator {
     }
 
     private int getNumberOfPayments() {
-        return termInYears * 12;
+        return this.termInYears * 12;
     }
 
     private float getMonthlyInterestRate() {
@@ -23,28 +22,32 @@ public class MortgageCalculator {
         return interestRate / 12;
     }
 
-    public void calculateMonthlyPayment() {
+    public double getMonthlyPayment() {
         long P = loanAmount;
         float r = getMonthlyInterestRate();
         int n = getNumberOfPayments();
 
+        System.out.println("P=" + P);
+        System.out.println("r=" + r);
+        System.out.println("n=" + n);
         double M = P * (((r * Math.pow(1 + r, n))) / ((Math.pow((1 + r), n)) - 1));
-        this.monthlyPayment = M;
-    }
 
-    @Override
-    public String toString() {
-        DecimalFormat df = new DecimalFormat("####0.00");
-        return "monthlyPayment: " + df.format(monthlyPayment);
+        return M;
     }
 
     public static void main(String[] args) {
-        long loanAmount = Long.parseLong(args[0]);
-        int termInYears = Integer.parseInt(args[1]);
-        float annualRate = Float.parseFloat(args[2]);
+        if (args.length < 3) {
+            System.out.println("usage: mortgageCalculator <loanAmount> <termInYears> <annualRate>");
+            System.exit(-1);
+        }
 
-        MortgageCalculator calculator = new MortgageCalculator(loanAmount, termInYears, annualRate);
-        calculator.calculateMonthlyPayment();
-        System.out.println(calculator);
+        final long loanAmount = Utilities.getLongValue(args[0]);
+        final int termInYears = Utilities.getIntValue(args[1]);
+        final float annualRate = Utilities.getFloatValue(args[2]);
+        final MortgageCalculator c = new MortgageCalculator(loanAmount, termInYears, annualRate);
+        final double monthlyPayment = c.getMonthlyPayment();
+        DecimalFormat df = new DecimalFormat("####0.00");
+
+        System.out.println("Monthly Payment: " + df.format(monthlyPayment));
     }
 }

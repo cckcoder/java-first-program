@@ -3,6 +3,7 @@ package com.h2;
 import java.time.LocalDate;
 import java.time.YearMonth;
 
+
 public class SavingsCalculator {
     private final float[] credits;
     private final float[] debits;
@@ -12,50 +13,48 @@ public class SavingsCalculator {
         this.debits = debits;
     }
 
+    public float calculate() {
+        return sumOfCredits() - sumOfDebits();
+    }
+
     private float sumOfCredits() {
         float sum = 0.0f;
-        for (float c : this.credits) sum += c;
+        for (float credit : credits) {
+            sum += credit;
+        }
         return sum;
     }
 
     private float sumOfDebits() {
         float sum = 0.0f;
-        for (float d : this.debits) sum += d;
+        for (float debit : debits) {
+            sum += debit;
+        }
         return sum;
     }
 
-    private static int remainingDaysInMonth(LocalDate date) {
-        YearMonth yearMonth = YearMonth.of(date.getYear(), date.getMonth());
-        int totalDayInMonth = yearMonth.lengthOfMonth();
-        return totalDayInMonth - date.getDayOfMonth();
-    }
-
-    public float calculate() {
-        return sumOfCredits() - sumOfDebits();
-    }
-
     public static void main(String[] args) {
-        String[] creditsAsString = args[0].split(",");
-        String[] debitAsString = args[1].split(",");
+        if (args.length < 2) {
+            System.out.println("usage: savingsCalculator <credits separated by ','> <debits separated by ','>");
+            System.exit(-1);
+        }
 
-        float[] credit = new float[creditsAsString.length];
-        float[] debit = new float[debitAsString.length];
+        final String[] creditsAsString = args[0].split(",");
+        final String[] debitsAsString = args[1].split(",");
+
+        final float[] credits = new float[creditsAsString.length];
+        final float[] debits = new float[debitsAsString.length];
 
         for (int i = 0; i < creditsAsString.length; i++) {
-            credit[i] = Float.parseFloat(creditsAsString[i]);
+            credits[i] = Utilities.getFloatValue(creditsAsString[i]);
         }
 
-        for (int i = 0; i < debitAsString.length; i++) {
-            debit[i] = Float.parseFloat(debitAsString[i]);
+        for (int i = 0; i < debitsAsString.length; i++) {
+            debits[i] = Utilities.getFloatValue(debitsAsString[i]);
         }
 
-        SavingsCalculator calculator = new SavingsCalculator(credit, debit);
-        float netSavings = calculator.calculate();
-        System.out.println(
-            "Net Savings = "
-                + netSavings +
-                ", remaining days in month = " +
-                remainingDaysInMonth(LocalDate.now())
-        );
+        final SavingsCalculator calculator = new SavingsCalculator(credits, debits);
+
+        System.out.println("Net Savings = " + calculator.calculate());
     }
 }

@@ -8,15 +8,18 @@ public class App {
         System.out.println("Hello World!");
     }
 
-    private static int add(int[] numbers) {
-        int sum = 0;
-        for (int num : numbers) {
-            sum += num;
-        }
-        return sum;
+    public static int doubleTheNumber(int number) {
+        // do it in module02
+        // todo: fix the implementation
+        // return -1;
+        return 2 * number;
     }
 
-    public static int doubleTheNumber(int number) {
-        return 2 * number;
+    private static int add(int[] numbers) {
+        var sum = 0;
+        for (int number : numbers) {
+            sum += number;
+        }
+        return sum;
     }
 }
