@@ -2,24 +2,13 @@ package com.h2;
 
 
 public class Utilities {
-    // float, long, int
-
-    public static float getFloatValue(String in) {
-        float out = Float.MIN_VALUE;
-        try {
-            out = Float.parseFloat(in);
-        } catch (NumberFormatException e) {
-            System.out.println(in + " cannot be converted into a 'float' value. Exiting program.");
-        }
-        return out;
-    }
 
     public static long getLongValue(String in) {
         long out = Long.MIN_VALUE;
         try {
             out = Long.parseLong(in);
         } catch (NumberFormatException e) {
-            System.out.println(in + " cannot be converted into a 'long' value. Exiting program.");
+            throw new IllegalArgumentException(in + " cannot be converted into a 'long' value. Exiting program.");
         }
         return out;
     }
@@ -29,8 +18,19 @@ public class Utilities {
         try {
             out = Integer.parseInt(in);
         } catch (NumberFormatException e) {
-            System.out.println(in + " cannot be converted into a 'float' value. Exiting program.");
+            throw new IllegalArgumentException(in + " cannot be converted into a 'int' value. Exiting program.");
         }
         return out;
     }
+
+    public static float getFloatValue(String in) {
+        float out = Float.MIN_VALUE;
+        try {
+            out = Float.parseFloat(in);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(in + " cannot be converted into a 'float' value. Exiting program.");
+        }
+        return out;
+    }
+
 }
