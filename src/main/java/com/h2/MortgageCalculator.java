@@ -3,9 +3,9 @@ package com.h2;
 import java.text.DecimalFormat;
 
 public class MortgageCalculator {
-    private final long loanAmount;
-    private final int termInYears;
-    private final float annualRate;
+    private long loanAmount;
+    private int termInYears;
+    private float annualRate;
     private double monthlyPayment;
 
     public MortgageCalculator(long loanAmount, int termInYears, float annualRate) {
@@ -32,7 +32,6 @@ public class MortgageCalculator {
         this.monthlyPayment = M;
     }
 
-    @Override
     public String toString() {
         DecimalFormat df = new DecimalFormat("####0.00");
         return "monthlyPayment: " + df.format(monthlyPayment);
@@ -45,6 +44,6 @@ public class MortgageCalculator {
 
         MortgageCalculator calculator = new MortgageCalculator(loanAmount, termInYears, annualRate);
         calculator.calculateMonthlyPayment();
-        System.out.println(calculator);
+        System.out.println(calculator.toString());
     }
 }
