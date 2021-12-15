@@ -1,13 +1,11 @@
 package com.h2;
 
-import javax.print.attribute.standard.PrinterMoreInfoManufacturer;
 import java.text.DecimalFormat;
-import java.util.logging.Logger;
 
 public class MortgageCalculator {
-    private long loanAmount;
-    private int termInYears;
-    private float annualRate;
+    private final long loanAmount;
+    private final int termInYears;
+    private final float annualRate;
     private double monthlyPayment;
 
     public MortgageCalculator(long loanAmount, int termInYears, float annualRate) {
@@ -44,11 +42,9 @@ public class MortgageCalculator {
         long loanAmount = Long.parseLong(args[0]);
         int termInYears = Integer.parseInt(args[1]);
         float annualRate = Float.parseFloat(args[2]);
-        MortgageCalculator calculator = new MortgageCalculator(
-            loanAmount, termInYears, annualRate
-        );
 
+        MortgageCalculator calculator = new MortgageCalculator(loanAmount, termInYears, annualRate);
         calculator.calculateMonthlyPayment();
-        System.out.println(calculator.toString());
+        System.out.println(calculator);
     }
 }
